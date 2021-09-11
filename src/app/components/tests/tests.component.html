@@ -1,0 +1,19 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Test</th>
+      <th scope="col">No. of Questions</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let test of tests; let i=index">
+      <th scope="row">{{ test.name }}</th>
+      <td>{{ test.questions.length }}</td>
+      <td>
+        <button class="btn btn-danger" value="{{ i }}" (click)="startTest(i)" *ngIf="isTestFinished(i)==null?true:false">Start Test</button>
+        <button class="btn btn-success" value="{{ i }}" *ngIf="isTestFinished(i)==null?false:true">Score : {{ isTestFinished(i) }}</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

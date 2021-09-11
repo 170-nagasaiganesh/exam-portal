@@ -1,0 +1,58 @@
+<form #testForm="ngForm" *ngIf="!testFinished">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">{{ test.name }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+              <div class="container">
+                <div>{{ position+1 }}.&nbsp;{{ question.questionText }}</div><br>
+            
+                <div *ngIf="question.type=='Multiple-Response'?false:true">  
+                  <div class="radio" 
+                    *ngFor = "let option of question.options; let i = index">
+                    <label>
+                      <input 
+                        type="radio" 
+                        name="val"
+                        ngModel
+                        [value] = "i"> {{ option }}
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="question.type=='Multiple-Response'?true:false">
+                  <div class="checkbox" 
+                    *ngFor = "let option of question.options; let i = index">
+                    <label>
+                    <input 
+                      type="checkbox" 
+                      name="val"
+                      ngModel
+                      [value] = "i"
+                      (change)="changeSelection(i)"> {{ option }}
+                    </label>
+                  </div>
+                </div>
+                
+                  
+                <br>
+              </div>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+          <tr>
+              <td>
+                <button class="btn btn-secondary" style="margin:5px; float:left" (click)="previousQuestion()" [disabled]="position<1">Previous</button>
+                <button class="btn btn-primary" style="margin:5px; float:left" (click)="nextQuestion(testForm)" [disabled]="position>=totalQuestions-1">Next</button>
+                <button class="btn btn-success" style="margin:5px; float:right" (click)="onSubmit(testForm)" [disabled]="!(position>=totalQuestions-1)">Finish</button>
+              </td>
+          </tr>
+      </tfoot>
+    </table>
+  </form>
+  <app-alert message="{{score}}" *ngIf="testFinished"></app-alert>
